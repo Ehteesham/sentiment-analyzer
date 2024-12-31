@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+wordcloud
+PyYAML
+Flask
+Jinja2
+nltk
+ensure
+python-box
+notebook
+setuptools
+-e .
