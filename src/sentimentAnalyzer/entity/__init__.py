@@ -12,3 +12,10 @@ class DataIngestionConfig:
     encoding: str
     train_size: int
     test_size: int
+
+@dataclass(frozen=True)
+class DataValidationConfig:
+    root_dir: Path
+    STATUS_FILE: Path
+    file_check_dir: Path
+    FILE_NAMES: list
