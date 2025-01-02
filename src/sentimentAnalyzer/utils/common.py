@@ -6,6 +6,7 @@ from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
 from typing import Any
+import pandas as pd
 
 
 
@@ -62,3 +63,35 @@ def get_size(path: Path) -> str:
     """
     size_in_kb = round(os.path.getsize(path)/1024)
     return f"~ {size_in_kb} KB"
+
+
+
+@ensure_annotations
+def read_dataset(path: Path, encoding: str) -> pd.DataFrame:
+    """
+    Reads a CSV dataset into a pandas DataFrame.
+
+    Args:
+        path (Path): The file path to the dataset.
+        encoding (str): The encoding format for the file. Defaults to 'utf-8'.
+
+    Returns:
+        pd.DataFrame: The loaded dataset.
+
+    Raises:
+        FileNotFoundError: If the file at the given path does not exist.
+        ValueError: If an error occurs during file reading.
+    """
+    cols_name = ["target", "ids", "date", "flag", "user", "text"]
+    if not os.path.exists(path):
+        logger.error(f"File not found at path: {path}")
+        raise FileNotFoundError(f"The file at {path} does not exist.")
+    
+    try:
+        logger.info(f"Reading dataset from path: {path}")
+        df = pd.read_csv(path, encoding=encoding, names=cols_name)
+        logger.info(f"Dataset loaded successfully with {df.shape[0]} rows and {df.shape[1]} columns.")
+        return df
+    except Exception as e:
+        logger.error(f"Error occurred while reading the dataset: {e}")
+        raise ValueError(f"Failed to read the dataset at {path}. Error: {e}")
