@@ -13,3 +13,12 @@ data_validation:
   STATUS_FILE: artifacts/data_validation/status.txt
   file_check_dir: artifacts/data_ingestion
   FILE_NAMES: ["test", "train"]
+
+
+data_transformation:
+  dataset_dir: artifacts/data_ingestion
+  train_data_file: artifacts/data_ingestion/train/train.csv
+  test_data_file: artifacts/data_ingestion/test/test.csv
+  transformed_data_dir: artifacts/data_transformation
+  train_transformed_dir: artifacts/data_transformation/train
+  test_transformed_dir: artifacts/data_transformation/test

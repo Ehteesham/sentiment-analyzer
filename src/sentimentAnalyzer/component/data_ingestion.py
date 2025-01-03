@@ -19,7 +19,7 @@ class DataIngestion:
     def split_dataset(self):
         dataset_path = Path(self.config.dataset_file)
         encoding = self.config.encoding
-        df = read_dataset(path=dataset_path, encoding=encoding)
+        df = read_dataset(path=dataset_path, encoding=encoding, training=True)
         train_data, test_data = train_test_split(df,
                                                  train_size=self.config.train_size,
                                                  test_size=self.config.test_size,

@@ -1,27 +1,40 @@
 from sentimentAnalyzer.pipeline.stage_01 import DataIngestionTrainingPipeline
 from sentimentAnalyzer.pipeline.stage_02 import DataValidationTrainingPipeline
+from sentimentAnalyzer.pipeline.stage_03 import DataTransformationTrainingPipeline
 from sentimentAnalyzer.logging import logger
 
 
 
-STAGE_NAME = "Data Ingestion stage"
+STAGE_NAME = "Data Ingestion Stage"
 try:
-   logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
+   logger.info(f">>>>>> STAGE {STAGE_NAME} STARTED <<<<<<") 
    data_ingestion = DataIngestionTrainingPipeline()
    data_ingestion.main()
-   logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+   logger.info(f">>>>>> STAGE {STAGE_NAME} COMPLETED <<<<<<\n\nx==========x")
 except Exception as e:
         logger.exception(e)
         raise e
 
 
 
-STAGE_NAME = "Data Validation stage"
+STAGE_NAME = "Data Validation Stage"
 try:
-   logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
+   logger.info(f">>>>>> STAGE {STAGE_NAME} STARTED <<<<<<") 
    data_validation = DataValidationTrainingPipeline()
    data_validation.main()
-   logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+   logger.info(f">>>>>> STAGE {STAGE_NAME} COMPLETED <<<<<<\n\nx==========x")
+except Exception as e:
+        logger.exception(e)
+        raise e
+
+
+
+STAGE_NAME = "Data transformation Stage"
+try:
+   logger.info(f">>>>>> STAGE {STAGE_NAME} STARTED <<<<<<") 
+   data_transformation = DataTransformationTrainingPipeline()
+   data_transformation.main()
+   logger.info(f">>>>>> STAGE {STAGE_NAME} COMPLETED <<<<<<\n\nx==========x")
 except Exception as e:
         logger.exception(e)
         raise e

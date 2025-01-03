@@ -1,7 +1,8 @@
 from sentimentAnalyzer.constant import *
 from sentimentAnalyzer.utils.common import read_yaml, create_directories
 from sentimentAnalyzer.entity import (DataIngestionConfig, 
-                                      DataValidationConfig)
+                                      DataValidationConfig,
+                                      DataTransformationConfig)
 
 class ConfigurationManager:
     def __init__(self, config_path = CONFIG_FILE_PATH, params_path = PARAMS_FILE_PATH):
@@ -44,3 +45,23 @@ class ConfigurationManager:
         )
 
         return data_validation
+    
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+        dataset = self.params.dataset
+        create_directories([config.transformed_data_dir])
+        create_directories([config.train_transformed_dir])
+        create_directories([config.test_transformed_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            dataset_dir = Path(config.dataset_dir),
+            transformed_data_dir = Path(config.transformed_data_dir),
+            train_data_file = Path(config.train_data_file),
+            test_data_file = Path(config.test_data_file),
+            train_transformed_dir = Path(config.train_transformed_dir),
+            test_transformed_dir = Path(config.test_transformed_dir),
+            encoder = dataset.data_encoding
+        )
+
+        return data_transformation_config
