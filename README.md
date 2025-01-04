@@ -63,7 +63,10 @@ docker run -p 5000:5000 yourusername/sentimentanalyzer
 This command will run the Flask application inside the container and expose it on port 5000.
 
 ### 5. Access the Application
-After the container is running, open a browser and go to: [localhost](http://127.0.0.1:5000)
+After the container is running, open a browser and go to:
+```bash
+http://127.0.0.1:5000
+```
 You should now see the sentiment analysis web app running.
 
 
@@ -122,7 +125,10 @@ python app.py
 
 ### 6. Access the Application
 
-After the Flask app starts, you can open your browser and go to: [localhost](http://127.0.0.1:5000)
+After the Flask app starts, you can open your browser and go to:
+```bash
+http://127.0.0.1:5000
+```
 This will open the sentiment analysis web app.
 
 ## How to Contribute
@@ -137,5 +143,5 @@ If you'd like to contribute to this project, follow these steps:
 If you encounter any issues, feel free to open an issue on GitHub or contact the maintainer.
 
 ## Contact
-Maintainer: Ansari Ehteesham Aqeel
-Email: an.ehteesham@gmail.com
+* Maintainer: Ansari Ehteesham Aqeel
+* Email: an.ehteesham@gmail.com
