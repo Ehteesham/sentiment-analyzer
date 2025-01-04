@@ -49,7 +49,6 @@ class ConfigurationManager:
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation
-        dataset = self.params.dataset
         create_directories([config.transformed_data_dir])
         create_directories([config.train_transformed_dir])
         create_directories([config.test_transformed_dir])
@@ -61,7 +60,9 @@ class ConfigurationManager:
             test_data_file = Path(config.test_data_file),
             train_transformed_dir = Path(config.train_transformed_dir),
             test_transformed_dir = Path(config.test_transformed_dir),
-            encoder = dataset.data_encoding
+            encoder = self.params.dataset.data_encoding,
+            max_features = self.params.text_vectoriser.max_features,
+            ngram_range = self.params.text_vectoriser.max_features,
         )
 
         return data_transformation_config

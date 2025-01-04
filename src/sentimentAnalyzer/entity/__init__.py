@@ -30,3 +30,5 @@ class DataTransformationConfig:
     train_transformed_dir: Path
     test_transformed_dir: Path
     encoder: str
+    max_features: int
+    ngram_range: list

@@ -70,7 +70,10 @@ class DataTransformation:
         X_train, y_train = self.text_transformer(path=self.config.train_data_file, data_info=DataInfo.TRAINING)
         X_test, y_test = self.text_transformer(path=self.config.test_data_file, data_info=DataInfo.TESTING)
         
-        vectoriser = TfidfVectorizer(ngram_range=(1,2), max_features=300000)
+        max_features = self.config.max_features
+        ngram_range = self.config.ngram_range
+
+        vectoriser = TfidfVectorizer(ngram_range=ngram_range, max_features=max_features)
         vectoriser.fit(X_train)
         X_train = vectoriser.transform(X_train)
         X_test = vectoriser.transform(X_test)
