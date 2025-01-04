@@ -1,5 +1,6 @@
 import re
 import string
+import joblib
 from pathlib import Path
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
@@ -75,6 +76,11 @@ class DataTransformation:
 
         vectoriser = TfidfVectorizer(ngram_range=ngram_range, max_features=max_features)
         vectoriser.fit(X_train)
+
+        # Saving the Vectoriser
+        joblib.dump(vectoriser, Path(f"{self.config.vectoriser_model}/vectoriser.pkl"))
+        logger.info(f"Saving Vectoriser Model in {self.config.vectoriser_model}")
+
         X_train = vectoriser.transform(X_train)
         X_test = vectoriser.transform(X_test)
 

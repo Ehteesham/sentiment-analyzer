@@ -29,6 +29,7 @@ class DataTransformationConfig:
     test_data_file: Path
     train_transformed_dir: Path
     test_transformed_dir: Path
+    vectoriser_model: Path
     encoder: str
     max_features: int
     ngram_range: tuple
@@ -53,3 +54,8 @@ class ModelEvaluationConfig:
     test_transformed_dir: Path
     model_dir: Path
     evaluation_saved: Path
+
+@dataclass(frozen=True)
+class UserPredictionConfig:
+    model_dir: Path
+    vectoriser_dir: Path

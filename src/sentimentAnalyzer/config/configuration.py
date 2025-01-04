@@ -4,7 +4,8 @@ from sentimentAnalyzer.entity import (DataIngestionConfig,
                                       DataValidationConfig,
                                       DataTransformationConfig,
                                       ModelTrainingConfig,
-                                      ModelEvaluationConfig)
+                                      ModelEvaluationConfig,
+                                      UserPredictionConfig)
 
 class ConfigurationManager:
     def __init__(self, config_path = CONFIG_FILE_PATH, params_path = PARAMS_FILE_PATH):
@@ -54,6 +55,7 @@ class ConfigurationManager:
         create_directories([config.transformed_data_dir])
         create_directories([config.train_transformed_dir])
         create_directories([config.test_transformed_dir])
+        create_directories([config.vectoriser_model])
 
         data_transformation_config = DataTransformationConfig(
             dataset_dir = Path(config.dataset_dir),
@@ -65,6 +67,7 @@ class ConfigurationManager:
             encoder = self.params.dataset.data_encoding,
             max_features = self.params.text_vectoriser.max_features,
             ngram_range = tuple(self.params.text_vectoriser.ngram_range),
+            vectoriser_model = Path(config.vectoriser_model)
         )
 
         return data_transformation_config
@@ -101,3 +104,14 @@ class ConfigurationManager:
         )
 
         return model_evaluation_config
+    
+
+    def get_user_prediction_config(self) -> UserPredictionConfig:
+        config = self.config.user_prediction
+
+        user_prediction_config = UserPredictionConfig(
+            model_dir = config.model_dir,
+            vectoriser_dir = config.vectoriser_dir
+        )
+
+        return user_prediction_config

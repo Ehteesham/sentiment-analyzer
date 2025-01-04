@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        header {
+            background-color: #666;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+            color: white;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #text {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #response {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #loader {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Sentiment Analyzer</h1>
+    </header>
+    <form method="POST" id="text">
+        <textarea id="tweets" name="tweets" rows="10" cols="50" placeholder="Write your message"></textarea>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="loader">Processing your request...</div>
+    <div id="response"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#text').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                const userInput = $('#tweets').val(); // Get the input value
+                
+                if (userInput.trim() === '') {
+                    alert('Please write a message before submitting.');
+                    return;
+                }
+
+                $('#response').html('');
+                $('#loader').show();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/process_data',  
+                    data: { 'tweets': userInput },
+                    success: function(response) {
+                        // Display the response dynamically
+                        $('#loader').hide();
+                        $('#response').html(`<p>Result: ${response.message}</p>`);
+                    },
+                    error: function() {
+                        $('#loader').hide();
+                        $('#response').html('<p style="color:red;">An error occurred. Please try again.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
