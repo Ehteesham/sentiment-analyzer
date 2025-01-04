@@ -1,0 +1,31 @@
+# Ignore local Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore notebooks
+notebooks/
+
+# Ignore git and version control files
+.git/
+.gitignore
+
+# Ignore documentation
+document/
+
+# Ignore development/IDE-specific files
+*.swp
+*.idea/
+.vscode/
+
+# Ignore other unnecessary files
+logs/
+
+artifacts/data_ingestion
+artifacts/data_transformation
+artifacts/data_validation
+artifacts/model_evaluation
+env/
+raw.zip
+template.py
+corpora
