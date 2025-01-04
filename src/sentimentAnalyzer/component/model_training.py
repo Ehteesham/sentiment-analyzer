@@ -14,9 +14,6 @@ class ModelTraining:
         X_train, y_train = load_transformed_data_file(path=self.config.train_data_file, 
                                                data_info=DataInfo.TRAINING)
         
-        X_test, y_test = load_transformed_data_file(path=self.config.test_data_file,
-                                                    data_info=DataInfo.TESTING)
-        
         # Getting Model Parameters
         C = self.config.C
         max_iter = self.config.max_iter

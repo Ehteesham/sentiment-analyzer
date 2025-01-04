@@ -45,3 +45,11 @@ class ModelTrainingConfig:
     penalty: str
     solver: str
     class_weight: str
+
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    test_transformed_dir: Path
+    model_dir: Path
+    evaluation_saved: Path

@@ -3,7 +3,8 @@ from sentimentAnalyzer.utils.common import read_yaml, create_directories
 from sentimentAnalyzer.entity import (DataIngestionConfig, 
                                       DataValidationConfig,
                                       DataTransformationConfig,
-                                      ModelTrainingConfig)
+                                      ModelTrainingConfig,
+                                      ModelEvaluationConfig)
 
 class ConfigurationManager:
     def __init__(self, config_path = CONFIG_FILE_PATH, params_path = PARAMS_FILE_PATH):
@@ -86,3 +87,17 @@ class ConfigurationManager:
         )
 
         return model_trianing_config
+    
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir = Path(config.root_dir),
+            test_transformed_dir = Path(config.test_transformed_dir),
+            model_dir = Path(config.model_dir),
+            evaluation_saved = Path(config.evaluation_saved)
+        )
+
+        return model_evaluation_config
