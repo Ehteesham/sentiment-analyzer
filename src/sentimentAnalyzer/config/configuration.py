@@ -2,7 +2,8 @@ from sentimentAnalyzer.constant import *
 from sentimentAnalyzer.utils.common import read_yaml, create_directories
 from sentimentAnalyzer.entity import (DataIngestionConfig, 
                                       DataValidationConfig,
-                                      DataTransformationConfig)
+                                      DataTransformationConfig,
+                                      ModelTrainingConfig)
 
 class ConfigurationManager:
     def __init__(self, config_path = CONFIG_FILE_PATH, params_path = PARAMS_FILE_PATH):
@@ -62,7 +63,26 @@ class ConfigurationManager:
             test_transformed_dir = Path(config.test_transformed_dir),
             encoder = self.params.dataset.data_encoding,
             max_features = self.params.text_vectoriser.max_features,
-            ngram_range = self.params.text_vectoriser.max_features,
+            ngram_range = tuple(self.params.text_vectoriser.ngram_range),
         )
 
         return data_transformation_config
+    
+    def get_model_training_config(self) -> ModelTrainingConfig:
+        config = self.config.model_trainer
+        parmas = self.params.model_params
+        create_directories([config.model_dir])
+
+        model_trianing_config = ModelTrainingConfig(
+            model_dir = Path(config.model_dir),
+            train_data_file = Path(config.train_data_file),
+
+            C = parmas.C,
+            max_iter = parmas.max_iter,
+            n_jobs = parmas.n_jobs,
+            penalty = parmas.penalty,
+            solver = parmas.solver,
+            class_weight = parmas.class_weight
+        )
+
+        return model_trianing_config

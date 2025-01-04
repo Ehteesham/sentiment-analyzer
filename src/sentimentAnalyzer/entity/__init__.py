@@ -31,4 +31,17 @@ class DataTransformationConfig:
     test_transformed_dir: Path
     encoder: str
     max_features: int
-    ngram_range: list
+    ngram_range: tuple
+
+
+@dataclass(frozen=True)
+class ModelTrainingConfig:
+    model_dir: Path
+    train_data_file: Path
+    # Model Parameters
+    C: float
+    max_iter: int
+    n_jobs: int
+    penalty: str
+    solver: str
+    class_weight: str

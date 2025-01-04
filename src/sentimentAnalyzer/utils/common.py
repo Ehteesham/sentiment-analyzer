@@ -130,34 +130,52 @@ def save_transformed_data_file(path: Path, data, data_info: DataInfo):
 
 
 @ensure_annotations
-def load_transformed_data_file(path: Path, data_info: DataInfo) -> Union[np.ndarray, csr_matrix]:
+def load_transformed_data_file(path: Path, data_info: DataInfo) -> tuple:
     """
-    Load transformed data from file.
+    Load transformed input and output data from files in a directory.
 
     Args:
-        path (Path): Path to the file to load.
-        data_info (DataInfo): Metadata about whether this is training or testing data.
+        path (Path): Path to the directory containing transformed data files.
+        data_info (DataInfo): Metadata about whether this data is for training or testing.
 
     Returns:
-        Union[np.ndarray, csr_matrix]: The loaded data.
+        dict: A dictionary with keys "input" (csr_matrix) and "output" (np.ndarray).
+              Example:
+              {
+                  "input": <csr_matrix>,
+                  "output": <ndarray>
+              }
 
     Raises:
-        FileNotFoundError: If the file does not exist.
-        ValueError: If the file extension is unsupported.
+        FileNotFoundError: If the directory does not contain any valid files.
+        ValueError: If a file has an unsupported extension.
+
+    Notes:
+        - The function expects at least one `.npz` file (for input data) and one `.npy` file
+          (for output data) in the provided directory.
+        - If the directory is empty, an exception is raised.
+        - Unsupported file extensions will result in a ValueError.
     """
 
-    if not path.exists():
-        logger.info(f"{path} does not exist")
-        raise FileNotFoundError(f"File not found: {path}")
+    path_file_lst = list(path.glob("*"))
+    result_dic = dict()
+
+    if not path_file_lst:
+        logger.info(f"{path_file_lst} does not exist")
+        raise FileNotFoundError(f"File not found: {path_file_lst}")
     
-    if path.suffix == ".npz":
-        data = load_npz(path)
-        logger.info(f"{data_info.value} is load from {path}")
-    elif path.suffix == ".npy":
-        data = np.load(path)
-        logger.info(f"{data_info.value} is load from {path}")
-    else:
-        logger.info(f"{path} file extension not supported")
-        raise ValueError(f"Unsupported file extension: {path.suffix}")
+    for file_path in path_file_lst:
+        
+        if file_path.suffix == ".npz":
+            data = load_npz(file_path)
+            result_dic["input"] = data
+            logger.info(f"Input {data_info.value} has been load from {file_path}")
+        elif file_path.suffix == ".npy":
+            data = np.load(file_path)
+            result_dic['output'] = data
+            logger.info(f"Output {data_info.value} is load from {file_path}")
+        else:
+            logger.info(f"{file_path} file extension not supported")
+            raise ValueError(f"Unsupported file extension: {file_path.suffix}")
     
-    return data
+    return result_dic.get("input"), result_dic.get("output")
