@@ -106,8 +106,8 @@ def read_dataset(path: Path, encoding: str, training=False) -> pd.DataFrame:
         logger.error(f"Error occurred while reading the dataset: {e}")
         raise ValueError(f"Failed to read the dataset at {path}. Error: {e}")
     
-
-def save_transformed_data_file(path: Path, data, data_info: DataInfo) -> None:
+@ensure_annotations
+def save_transformed_data_file(path: Path, data, data_info: DataInfo):
     """
     Saves transformed data to the specified file path with proper format and logs the process.
 
@@ -128,9 +128,8 @@ def save_transformed_data_file(path: Path, data, data_info: DataInfo) -> None:
     else:
         logger.info(f"{path.suffix} is not a correct extension {data_info.value} will not be stored")
 
-    return None
 
-
+@ensure_annotations
 def load_transformed_data_file(path: Path, data_info: DataInfo) -> Union[np.ndarray, csr_matrix]:
     """
     Load transformed data from file.
